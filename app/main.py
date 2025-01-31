@@ -3,7 +3,7 @@ from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from .schema import ProfileSchema, ResponseSchema
 from .crud import create_profile, get_first_profile
-from .database import get_db, create_tables  # Import the function to create tables
+from .database import get_db, create_tables  
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -15,19 +15,17 @@ app = FastAPI(
 # Ensure database tables are created on startup
 @app.on_event("startup")
 async def startup():
-    await create_tables()  # Calls the async function to create tables
-
-
+    await create_tables()
 
 # Allow all origins
 origins = [
     "*",
 ]
 
-# Add CORSMiddleware to handle cross-origin requests
+# CORSMiddleware to handle cross-origin requests
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,  # List of allowed origins (you can specify more)
+    allow_origins=origins,  
     allow_credentials=True,
     allow_methods=["*"],  # Allow all HTTP methods (GET, POST, etc.)
     allow_headers=["*"],  # Allow all headers (e.g., Authorization)

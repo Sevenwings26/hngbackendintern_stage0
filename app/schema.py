@@ -1,4 +1,3 @@
-# Validate Data 
 from pydantic import BaseModel, HttpUrl, validator
 from datetime import datetime, timezone
 
