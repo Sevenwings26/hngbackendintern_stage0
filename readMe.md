@@ -32,7 +32,7 @@ This project is a project given by HNG12 stage0 - A public API to retrieve Basic
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/yourusername/profile-api.git
+    git clone https://github.com/Sevenwings26/hngbackendintern_stage0
     cd profile-api
     ```
 
@@ -40,7 +40,7 @@ This project is a project given by HNG12 stage0 - A public API to retrieve Basic
 
     ```bash
     python3 -m venv venv
-    source venv/bin/activate  # For Windows use: venv\Scripts\activate
+    venv\Scripts\activate  # For Windows use: source venv/bin/activate  
     ```
 
 3. **Install dependencies:**
@@ -48,6 +48,7 @@ This project is a project given by HNG12 stage0 - A public API to retrieve Basic
     ```bash
     pip install -r requirements.txt
     ```
+    
 
 ## Database Configuration
 

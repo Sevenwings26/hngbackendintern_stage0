@@ -1,9 +1,10 @@
 from fastapi import FastAPI, Depends, HTTPException
-from fastapi.responses import JSONResponse
+# from fastapi.responses import JSONResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 from .schema import ProfileSchema, ResponseSchema
 from .crud import create_profile, get_first_profile
 from .database import get_db, create_tables  # Import the function to create tables
+
 
 app = FastAPI(
     title="Profile API",
@@ -15,9 +16,15 @@ app = FastAPI(
 async def startup():
     await create_tables()  # Calls the async function to create tables
 
-@app.get("/hello/")
+# All routes 
+@app.get("/")
 async def info():
-    return {"message": "FastAPI"}
+    return {
+        "Programing Languange": "Python(FastAPI)",
+        "Documentation": "/docs/",
+        "Profile": "/profile/",
+        # "Post": "/post/"
+    }
 
 @app.post("/create/", response_model=ProfileSchema)
 async def create_profile_endpoint(profile: ProfileSchema, db: AsyncSession = Depends(get_db)):
