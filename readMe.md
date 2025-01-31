@@ -1,68 +1,109 @@
-# Profile API with FastAPI & PostgreSQL
+# Basic Profile API
 
-## Project Overview
-
-This project is a project given by HNG12 stage0 - A public API to retrieve Basic Information. I used **FastAPI** application that interacts with a **PostgreSQL** database. It allows users to create and retrieve profile data. 
-
-## Features
-
-- **Create Profile**: A `POST` endpoint that allows users to create profiles.
-- **Retrieve First Profile**: A `GET` endpoint that retrieves the first profile from the database.
-- **Datetime Management**: The `current_datetime` field handles `datetime` objects, which are saved in the database as either **ISO 8601 formatted timestamps** or **naive datetime** (without timezone).
+## Description
+This project is a FastAPI-based API for managing user profiles. It provides endpoints for retrieving basic API information and user profiles. The API supports CORS handling to allow cross-origin requests from frontend applications.
 
 ## Tech Stack
-
 - **FastAPI**: A modern, fast web framework for building APIs with Python.
 - **SQLAlchemy**: ORM used for database interactions.
 - **Asyncpg**: PostgreSQL driver for async database interactions.
 - **PostgreSQL**: A relational database to store profile data.
 - **Pydantic**: Data validation and serialization for request/response models.
 
-## Requirements
+## Setup Instructions
+### Prerequisites
+- Python 3.8+
+- Virtual environment (recommended)
 
-- Python 3.10+
-- `FastAPI`
-- `SQLAlchemy`
-- `asyncpg`
-- `PostgreSQL`
-- `Pydantic`
+### Installation Steps
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/Sevenwings26/hngbackendintern_stage0/
+   cd project_directory
+   ```
 
-## Installation
+2. **Create a Virtual Environment and Activate It**
+   ```bash
+   python -m venv venv
+   venv\Scripts\activate  # On Windows
+   source venv/bin/activate  # On macOS/Linux
+   ```
 
-1. **Clone the repository:**
+3. **Install Dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-    ```bash
-    git clone https://github.com/Sevenwings26/hngbackendintern_stage0
-    cd profile-api
-    ```
+4. **Set Up Environment Variables**
+   Create a `.env` file and configure necessary environment variables:
+   ```env
+   DATABASE_URL=postgresql+asyncpg://user:password@localhost/dbname   (for production)
+     or
+   DATABASE_URL=sqlite:///./profile5.db (for development)
+   ```
 
-2. **Create and activate a virtual environment:**
+5. **Run the FastAPI Server**
+   ```bash
+   uvicorn main:app --reload
+   ```
 
-    ```bash
-    python3 -m venv venv
-    venv\Scripts\activate  # For Windows use: source venv/bin/activate  
-    ```
+6. **Access the API**
+   - Open your browser and visit: [http://127.0.0.1:8000](http://127.0.0.1:8000)
+   - API documentation is available at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
-3. **Install dependencies:**
+## API Documentation
+### Base URL
+```
+http://127.0.0.1:8000
+```
 
-    ```bash
-    pip install -r requirements.txt
-    ```
-    
+### Endpoints
+#### 1. Get API Information
+- **URL:** `/`
+- **Method:** `GET`
+- **Response:**
+  ```json
+  {
+    "message": "FastAPI with CORS enabled",
+    "Documentation": "/docs/",
+    "Profile": "/profile/"
+  }
+  ```
 
-## Database Configuration
+#### 2. Get Profile Information
+- **URL:** `/profile/`
+- **Method:** `GET`
+- **Response:**
+  ```json
+  {
+    "email": "iarowosola25@gmail.com",
+    "current_datetime": "2025:01:31:19:23:0000",
+    "github_url": "https//:github.com/sevenwings"
+  }
+  ```
 
-The application uses **SQLAlchemy** and **asyncpg** for asynchronous database interactions. The `Profile` model includes a `current_datetime` field, which is stored as an **ISO 8601 formatted timestamp** or (**naive datetime** - without timezone) based on your configuration.
+#### 3. Create Profile 
+- **URL:** `/create/`
+- **Method:** `POST`
+- **Response:**
+  ```json
+  {
+    "name":"Iyanu Arowosola",
+    "email": "iarowosola25@gmail.com",
+    "current_datetime": "2025:01:31:19:23:0000",
+    "github_url": "https//:github.com/sevenwings"
+  }
+  ```
 
-### Handling DateTime
 
-To resolve issues related to datetime storage:
+### Example Usage
+Fetch profile information using `curl`:
+```bash
+curl -X GET "http://127.0.0.1:8000/profile/" -H "accept: application/json"
+```
 
-1. **Naive datetime (without timezone):**
+## CORS Handling
+This API includes CORS support to allow cross-origin requests. The `CORSMiddleware` has been configured to permit requests from specified origins, methods, and headers.
 
-   If you wish to store `current_datetime` as a **naive datetime** (timezone-naive), ensure the datetime object is **timezone-aware** before storing it. This can be done by replacing the `tzinfo` with `None`.
-
-   Example fix in `create_profile`:
-
-   ```python
-   naive_datetime = profile_data.current_datetime.replace(tzinfo=None)
+## Hiring Python Developers
+Looking to hire expert Python developers? Check out [HNG Python Developers](https://hng.tech/hire/python-developers).
