@@ -4,6 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from .schema import ProfileSchema, ResponseSchema
 from .crud import create_profile, get_first_profile
 from .database import get_db, create_tables  # Import the function to create tables
+from fastapi.middleware.cors import CORSMiddleware
 
 
 app = FastAPI(
@@ -15,6 +16,23 @@ app = FastAPI(
 @app.on_event("startup")
 async def startup():
     await create_tables()  # Calls the async function to create tables
+
+
+
+# Allow all origins
+origins = [
+    "*",
+]
+
+# Add CORSMiddleware to handle cross-origin requests
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  # List of allowed origins (you can specify more)
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allow all headers (e.g., Authorization)
+)
+
 
 # All routes 
 @app.get("/")
@@ -41,3 +59,4 @@ async def read_first_profile(db: AsyncSession = Depends(get_db)):
     profile_data.current_datetime = profile.current_datetime.isoformat().replace("+00:00", "Z")
 
     return profile_data
+
