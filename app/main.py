@@ -42,6 +42,18 @@ async def info():
         # "Post": "/post/"
     }
 
+# Apology to avoid_me - 27th Feb, 25 
+@app.get("/apology")
+async def apology_to_avoidme():
+    return{
+        "first_name":"Iyanu",
+        "last_name":"Arowosola",
+        "Track":"Backend",
+        "Offense":"I didn't follow instructions in time.",
+        "Apology":"I take full responsibity for my actions, and I determine to follow instructions as given my mentors."
+    }
+
+
 @app.post("/create/", response_model=ProfileSchema)
 async def create_profile_endpoint(profile: ProfileSchema, db: AsyncSession = Depends(get_db)):
     created_profile = await create_profile(db, profile)  # Await the coroutine here
